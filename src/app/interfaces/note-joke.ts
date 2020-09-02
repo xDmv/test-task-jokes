@@ -1,6 +1,15 @@
-import { Joke } from './joke'
-
 export interface NoteJoke {
     type: string;
-    value: [Joke];
+    value: [JokeList];
+}
+
+export interface JokeList {
+    id: number;
+    joke: string;
+    categories: [string];
+}
+
+export interface Joke {
+    id: number;
+    text: string;
 }

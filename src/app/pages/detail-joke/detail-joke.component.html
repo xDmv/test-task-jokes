@@ -1,0 +1,14 @@
+<div [ngClass]="isDark ? 'theme-bg--dark' : 'theme-bg--ligth'">
+    <nav class="navbar">
+        <a routerLink="" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'">Back</a>
+        <div class="theme-box-btn" >
+            <i [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--ligth'">Theme color:</i>
+            <button class="theme-btn--ligth theme-text--ligth" [ngClass]="isDark ? '' : 'active'" (click)="themeColor('ligth')">ligth</button>
+            <button class="theme-btn--dark theme-text--dark" [ngClass]="isDark ? 'active' : ''" (click)="themeColor('dark')">dark</button>
+        </div>
+    </nav>
+
+    <div [ngClass]="isDark ? 'section theme-card--dark' : 'section theme-card--ligth'">
+        <p [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--ligth'">{{ joke }}</p>
+    </div>
+</div>

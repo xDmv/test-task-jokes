@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/srvices/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NoteJoke } from '../../interfaces/note-joke'
+import { NoteJoke } from '../../interfaces/note-joke';
+import { Joke } from '../../interfaces/joke';
 
 
 @Component({
@@ -29,15 +30,13 @@ export class DetailJokeComponent implements OnInit {
 	}
 
 	getData(id: string){
-		console.log('id:', id);
 		this.api.getOnejake(id).subscribe(
 		(data) => { 
-				console.log('data: ', data );
 				let note = data as NoteJoke;
 				if(note.type !== "success"){
 					return this.router.navigateByUrl('**');
 				}
-				this.joke = note.value.joke;
+				this.joke = note.value['joke'];
 			},
 		(error) => { console.log('error', error) }
 		)

@@ -1,0 +1,44 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+
+    .theme-box-btn {
+        align-items: center;
+    }
+    .active {
+        text-decoration: underline;
+        border-bottom: 2px solid #000;
+    }
+}
+
+.section {
+    border-radius: 1em;
+    padding: 1em;
+    margin: 1em;
+
+    .pagination {
+        .pagination-btns { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            .btn-number-current-page {
+                border: 2px solid #fff;
+            }
+        }
+        .pagination-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            i {
+                padding-left: 1em;
+            }
+            strong {
+                padding-left: 1em;
+            }
+        }
+
+    }
+}

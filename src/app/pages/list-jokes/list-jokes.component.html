@@ -1,0 +1,37 @@
+<div [ngClass]="isDark ? 'theme-bg--dark' : 'theme-bg--ligth'">
+    <div class="navbar">
+        <div>
+            <input type="text" [ngClass]="isDark ? 'theme-input--dark' : 'theme-input--ligth'" [(ngModel)]="search_text">
+            <button [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onSearch()">Search</button>
+        </div>
+        <div class="theme-box-btn" >
+            <i [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--ligth'">Theme color:</i>
+            <button class="theme-btn--ligth theme-text--ligth" [ngClass]="isDark ? '' : 'active'" (click)="themeColor('ligth')">ligth</button>
+            <button class="theme-btn--dark theme-text--dark" [ngClass]="isDark ? 'active' : ''" (click)="themeColor('dark')">dark</button>
+        </div>
+    </div>
+
+    <div [ngClass]="isDark ? 'section theme-card--dark' : 'section theme-card--ligth'">
+
+        <app-list-pagination [dataSourse]="list_jokes" [isDark]="isDark"></app-list-pagination>
+
+        <div class="pagination">
+            <div class="pagination-btns">
+                <a [ngClass]="isDark ? 'theme-btn--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onPrev()">Prev</a>
+                <a *ngIf="current_page !== 1" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onPage(current_page - 2)">{{ current_page - 2 }}</a>
+                <a *ngIf="current_page !== 1" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onPage(current_page - 1)">{{ current_page - 1 }}</a>
+                <a [ngClass]="isDark ? 'theme-btn--dark theme-text--dark btn-number-current-page' : 'theme-btn--ligth theme-text--ligth btn-number-current-page'">{{ current_page  }}</a>
+                <a [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onPage(current_page + 1)">{{ current_page + 1 }}</a>
+                <a [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onPage(current_page + 2)">{{ current_page + 2 }}</a>
+                <a *ngIf="current_page === 1" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onPage(current_page + 3)">{{ current_page + 3 }}</a>
+                <a [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'" (click)="onNext()">Next</a>
+            </div>
+            <p class="pagination-info">
+                <i>Jokes: {{ start_joke }}-{{ end_joke }} of {{ total_jokes }} </i>
+                <i>Current Page: {{ current_page  }}</i>
+                <strong> Total pages: {{ total_pages }}</strong>
+            </p>
+        </div>
+    </div>
+
+</div>

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/srvices/api.service';
+import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { NoteJoke } from '../../interfaces/note-joke';
-import { Joke } from '../../interfaces/joke';
 
 
 @Component({

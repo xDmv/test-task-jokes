@@ -26,13 +26,14 @@ export class DetailJokeComponent implements OnInit {
   }
 
   getData(id: string) {
+    console.log('id', id);
     this.api.getOneJoke(id).subscribe(
       (data) => {
         const note = data as NoteJoke;
         if (note.type !== 'success') {
           return this.router.navigateByUrl('**');
         }
-        this.joke = note.value[0].joke;
+        this.joke = note.value['joke'];
       },
       (error) => {
         console.error('error', error);

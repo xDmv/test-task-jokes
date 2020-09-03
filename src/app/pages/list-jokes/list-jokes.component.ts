@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { NoteJoke } from '../../interfaces/note-joke';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 import { JokeList, Joke } from 'src/app/interfaces/note-joke';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-list-jokes',
@@ -12,21 +13,32 @@ import { JokeList, Joke } from 'src/app/interfaces/note-joke';
 })
 export class ListJokesComponent implements OnInit {
   isDark: boolean;
-  searchText: string;
   currentPage: number;
   totalPages: number;
   totalJokes: number;
   startJoke: number;
   endJoke: number;
-  fullJoke = [];
-  currentArray = [];
-  listJokes = [];
+  fullJoke = []; // 
+  currentArray = []; //
+  listJokes = []; //
+  searchForm: FormGroup;
+  warning: boolean;
 
-  constructor(private api: ApiService, public router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private api: ApiService, 
+    public router: Router) {}
 
   ngOnInit(): void {
     this.themeColor(localStorage.getItem('ThemeColor'));
     this.getData();
+    this.buildForms();
+  }
+
+  buildForms() {
+    this.searchForm = this.formBuilder.group({
+      searchString: ['', [Validators.required, Validators.minLength(2)]]
+    });
   }
 
   getData() {
@@ -64,17 +76,31 @@ export class ListJokesComponent implements OnInit {
     this.isDark = false;
   }
 
-  onSearch() {
-    this.currentArray = [];
-    const reg = new RegExp(this.searchText, 'i');
-    this.fullJoke.map((item) => {
-      if (item.text.match(reg)) {
-        this.currentArray.push(item);
-      }
-    });
-    this.onPagination();
+  startLiveSearch() {
+    if (this.searchForm.valid) {
+      console.log('rrr valid')
+      this.searchForm.valueChanges
+      .pipe(
+        debounceTime(1500)
+      )
+      .subscribe(() => {
+        this.warning = false;
+        console.log('rrr subscribe')
+        this.currentArray = [];
+        const reg = new RegExp(this.searchForm.value.searchString, 'i');
+        this.fullJoke.map((item) => {
+          if (item.text.match(reg)) {
+            this.currentArray.push(item);
+          }
+        });
+        this.onPagination();
+      })
+    } else {
+      this.warning = true;
+    }
   }
 
+//---------//
   onPagination() {
     this.listJokes = [];
     this.totalJokes = this.currentArray.length;

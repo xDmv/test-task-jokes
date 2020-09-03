@@ -11,8 +11,10 @@
         }
     }
     .active {
-        border-bottom: 2px solid #000;
         background: #32CD32;
+    }
+    .active:hover {
+        background: #006400;
     }
 }
 

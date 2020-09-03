@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './pages/list-jokes/components/list/list.component';
 import { ApiService } from './services/api.service';
 import { PaginationComponent } from './pages/list-jokes/components/pagination/pagination.component';
+import { StateService } from './services/state.service';
+import { PaginationService } from './services/pagination.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { PaginationComponent } from './pages/list-jokes/components/pagination/pa
     ReactiveFormsModule
   ],
   providers: [
-    ApiService
+    ApiService,
+    StateService,
+    PaginationService
   ],
   bootstrap: [AppComponent]
 })

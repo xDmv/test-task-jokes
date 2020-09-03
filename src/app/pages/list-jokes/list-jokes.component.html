@@ -1,9 +1,12 @@
 <div [ngClass]="isDark ? 'theme-bg--dark' : 'theme-bg--light'">
     <div class="navbar">
-        <div>
-            <input type="text" [ngClass]="isDark ? 'theme-input--dark' : 'theme-input--light'" [(ngModel)]="searchText">
-            <button [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onSearch()">Search</button>
-        </div>
+        <form [formGroup]="searchForm" (ngSubmit)="startLiveSearch()">
+            <div>
+                <input type="text" formControlName="searchString" [ngClass]="isDark ? 'theme-input--dark' : 'theme-input--light'" (keyup)="startLiveSearch()">
+                <button type="submit" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'">Search</button>
+            </div>
+            <span *ngIf="warning" style="color: red">Must not null and minimal 2 simvol</span>
+        </form>
         <div class="theme-box-btn" >
             <i [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--light'">Theme color:</i>
             <button class="theme-btn--light theme-text--light" [ngClass]="isDark ? '' : 'active'" (click)="themeColor('light')">light</button>
@@ -13,7 +16,9 @@
 
     <div [ngClass]="isDark ? 'section theme-card--dark' : 'section theme-card--light'">
 
-        <app-list-pagination [dataSource]="listJokes"></app-list-pagination>
+        <app-list [dataSource]="listJokes"></app-list>
+
+        <app-pagination></app-pagination>
 
         <div class="pagination">
             <div class="pagination-btns">

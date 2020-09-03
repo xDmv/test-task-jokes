@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { NoteJoke } from '../../interfaces/note-joke';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-detail-joke',
@@ -12,17 +15,23 @@ export class DetailJokeComponent implements OnInit {
   id: string;
   joke: string;
   isDark: boolean;
+  private ngUnsubscribe: Subject<void>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public router: Router,
-    public api: ApiService
-  ) {}
+    public api: ApiService,
+    private store: StateService
+  ) {
+    this.ngUnsubscribe = new Subject();
+  }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.getData(this.id);
-    this.themeColor(localStorage.getItem('ThemeColor'));
+    this.store.theme.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
+      this.isDark = value;
+    });
   }
 
   getData(id: string) {
@@ -41,13 +50,8 @@ export class DetailJokeComponent implements OnInit {
     );
   }
 
-  themeColor(val: string) {
-    if (val === 'dark') {
-      this.isDark = true;
-      localStorage.setItem('ThemeColor', 'dark');
-      return;
-    }
-    localStorage.setItem('ThemeColor', 'light');
-    this.isDark = false;
+  isSetDarkTheme(value: boolean) {
+    // @ts-ignore
+    this.store.theme = value;
   }
 }

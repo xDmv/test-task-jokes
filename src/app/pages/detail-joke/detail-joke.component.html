@@ -3,12 +3,12 @@
         <a routerLink="" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'">Back</a>
         <div class="theme-box-btn" >
             <i [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--light'">Theme color:</i>
-            <button class="theme-btn--light theme-text--light" [ngClass]="isDark ? '' : 'active'" (click)="themeColor('light')">light</button>
-            <button class="theme-btn--dark theme-text--dark" [ngClass]="isDark ? 'active' : ''" (click)="themeColor('dark')">dark</button>
+            <button class="theme-btn--light theme-text--light" [ngClass]="isDark ? '' : 'active'" (click)="isSetDarkTheme(false)">light</button>
+            <button class="theme-btn--dark theme-text--dark" [ngClass]="isDark ? 'active' : ''" (click)="isSetDarkTheme(true)">dark</button>
         </div>
     </nav>
 
-    <div [ngClass]="isDark ? 'section theme-card--dark' : 'section theme-card--light'">
+    <div [ngClass]="isDark ? 'section theme-card--dark theme-text--dark' : 'section theme-card--light theme-text--light'">
         <p [innerHTML]="joke"></p>
     </div>
 </div>

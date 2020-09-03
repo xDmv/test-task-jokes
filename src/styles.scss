@@ -1,34 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 
-// dark/ligth theme colors:
-html, body{
+// dark/light theme colors:
+html, body {
     margin: 0;
     padding: 0;
     line-height: 1.15;
 }
 
 $bg-colors:(
-    ligth: linear-gradient(#E6E7E7, #A2E7E4),
+    light: linear-gradient(#E6E7E7, #A2E7E4),
     dark: #002b36
 );
 
 $btn-colors:(
-    ligth:  #30CDD6,
+    light:  #30CDD6,
     dark:  #515960
 );
 
 $text-colors:(
-    ligth:  #000,
+    light:  #000,
     dark:  #fff
 );
 
 $card-joke:(
-    ligth: #1c72c2,
+    light: #1c72c2,
     dark: #1a3f48
 );
 
 $input-search:(
-    ligth: #fff,
+    light: #fff,
     dark: #A9BDBD
 );
 

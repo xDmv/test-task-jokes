@@ -3,10 +3,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 1em;
-    .theme-box-btn{
+    .theme-box-btn {
         align-items: center;
     }
-    .active{
+    .active {
         text-decoration: underline;
         border-bottom: 2px solid #000;
     }
@@ -19,5 +19,5 @@
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%) 
+    transform: translate(-50%, -50%)
 }

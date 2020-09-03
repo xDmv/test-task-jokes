@@ -6,10 +6,13 @@
 
     .theme-box-btn {
         align-items: center;
+        i {
+            padding-right: 5px;
+        }
     }
     .active {
-        text-decoration: underline;
         border-bottom: 2px solid #000;
+        background: #32CD32;
     }
 }
 

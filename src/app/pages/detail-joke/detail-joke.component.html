@@ -1,14 +1,14 @@
-<div [ngClass]="isDark ? 'theme-bg--dark' : 'theme-bg--ligth'">
+<div [ngClass]="isDark ? 'theme-bg--dark' : 'theme-bg--light'">
     <nav class="navbar">
-        <a routerLink="" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--ligth theme-text--ligth'">Back</a>
+        <a routerLink="" [ngClass]="isDark ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'">Back</a>
         <div class="theme-box-btn" >
-            <i [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--ligth'">Theme color:</i>
-            <button class="theme-btn--ligth theme-text--ligth" [ngClass]="isDark ? '' : 'active'" (click)="themeColor('ligth')">ligth</button>
+            <i [ngClass]="isDark ? 'theme-text--dark' : 'theme-text--light'">Theme color:</i>
+            <button class="theme-btn--light theme-text--light" [ngClass]="isDark ? '' : 'active'" (click)="themeColor('light')">light</button>
             <button class="theme-btn--dark theme-text--dark" [ngClass]="isDark ? 'active' : ''" (click)="themeColor('dark')">dark</button>
         </div>
     </nav>
 
-    <div [ngClass]="isDark ? 'section theme-card--dark' : 'section theme-card--ligth'">
+    <div [ngClass]="isDark ? 'section theme-card--dark' : 'section theme-card--light'">
         <p [innerHTML]="joke"></p>
     </div>
 </div>

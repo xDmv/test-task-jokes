@@ -5,7 +5,7 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class StateService {
+export class PaginationService {
   private isConfigured: boolean;
   private isThemeDark$: Subject<boolean>;
   private allJokes$: Subject<Joke[]>;
@@ -27,67 +27,72 @@ export class StateService {
     this.rangeJokes$ = new ReplaySubject(1);
     this.currentPage$ = new ReplaySubject(1);
   }
-  // @ts-ignore
-  set theme(value: boolean) {
+
+  setTheme(value: boolean) {
+    const themeSiDark = value ? '1' : '0';
+    localStorage.setItem('isThemeDark', themeSiDark);
     this.isThemeDark$.next(value);
   }
-  // @ts-ignore
+
   get theme(): Observable<boolean> {
+    let value = localStorage.getItem('isThemeDark')=== '1' ? true : false;
+    this.setTheme(value)
     return this.isThemeDark$.asObservable();
   }
-  // @ts-ignore
-  set allJokes(value: Joke[]) {
+
+
+  setAllJokes(value: Joke[]) {
     this.allJokes$.next(value);
   }
-  // @ts-ignore
+
   get allJokes(): Observable<Joke[]> {
     return this.allJokes$.asObservable();
   }
-  // @ts-ignore
-  set AfterSearchArray(value: Joke[]) {
+
+  setAfterSearchArray(value: Joke[]) {
     this.afterSearchArray$.next(value);
   }
-  // @ts-ignore
+
   get AfterSearchArray(): Observable<Joke[]> {
     return this.afterSearchArray$.asObservable();
   }
-  // @ts-ignore
-  set shownJokes(value: Joke[]) {
+
+  setShownJokes(value: Joke[]) {
     this.shownJokes$.next(value);
   }
-  // @ts-ignore
+
   get shownJokes(): Observable<Joke[]> {
     return this.shownJokes$.asObservable();
   }
-  // @ts-ignore
-  set totalPages(value: number) {
+
+  setTotalPages(value: number) {
     this.totalPages$.next(value);
   }
-  // @ts-ignore
+
   get totalPages(): Observable<number> {
     return this.totalPages$.asObservable();
   }
-  // @ts-ignore
-  set totalJokes(value: number) {
+
+  setTotalJokes(value: number) {
     this.totalJokes$.next(value);
   }
-  // @ts-ignore
+
   get totalJokes(): Observable<number> {
     return this.totalJokes$.asObservable();
   }
-  // @ts-ignore
-  set rangeJokes(value: string) {
+
+  setRangeJokes(value: string) {
     this.rangeJokes$.next(value);
   }
-  // @ts-ignore
+
   get rangeJokes(): Observable<string> {
     return this.rangeJokes$.asObservable();
   }
-  // @ts-ignore
-  set currentPage(value: number) {
+
+  setCurrentPage(value: number) {
     this.currentPage$.next(value);
   }
-  // @ts-ignore
+
   get currentPage(): Observable<number> {
     return this.currentPage$.asObservable();
   }
@@ -102,5 +107,21 @@ export class StateService {
       this.shownJokes$.next([]);
       this.isConfigured = true;
     }
+  }
+
+  onPagination(value: Joke[]) {
+    const currentArray = value;
+    let endJoke;
+    if(currentArray.length  > 10){
+      endJoke = 10;
+    } else {
+      endJoke = currentArray.length;
+    }
+    let allpage = currentArray.length > 10 ? Math.ceil(currentArray.length / 10) : 1;
+    this.setTotalJokes(currentArray.length);
+    this.setTotalPages(allpage);
+    this.setCurrentPage(1);
+    this.setRangeJokes(`1-${endJoke}`);
+    this.setShownJokes(currentArray.slice(0, endJoke)); 
   }
 }

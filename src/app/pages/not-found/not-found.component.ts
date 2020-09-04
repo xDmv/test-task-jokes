@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { StateService } from '../../services/state.service';
+import { PaginationService } from '../../services/pagination.service';
 
 @Component({
   selector: 'app-not-found',
@@ -12,7 +12,7 @@ export class NotFoundComponent implements OnInit, OnDestroy {
   isDark: boolean;
   private ngUnsubscribe: Subject<void>;
 
-  constructor(private store: StateService) {
+  constructor(private store: PaginationService) {
     this.ngUnsubscribe = new Subject();
   }
 

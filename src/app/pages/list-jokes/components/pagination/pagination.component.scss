@@ -1,0 +1,28 @@
+.pagination {
+    .pagination-btns { 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .btn-number-current-page {
+            border: 2px solid #fff;
+        }
+        button:disabled,
+        button[disabled] {
+            border: 1px solid #999999;
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+    }
+    .pagination-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        i {
+            padding-left: 1em;
+        }
+        strong {
+            padding-left: 1em;
+        }
+    }
+}

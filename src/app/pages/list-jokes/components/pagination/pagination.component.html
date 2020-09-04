@@ -1,0 +1,24 @@
+<div class="pagination">
+    <div class="pagination-btns">
+        <button [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPrev()" [disabled]="currentPage === 1 ? true : false">Prev</button>
+        <a *ngIf="currentPage > 2" [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPage(currentPage - 2)">{{ currentPage - 2 }}</a>
+        <a *ngIf="currentPage > 1 " [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPage(currentPage - 1)">{{ currentPage - 1 }}</a>
+
+        <a [ngClass]="isTheme ? 'theme-btn--dark  btn-number-current-page theme-text--dark' : 'theme-btn--light  btn-number-current-page theme-text--light'">{{ currentPage  }}</a>
+
+        <a *ngIf="(totalPages > 1) && (currentPage + 2 < totalPages)" [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPage(currentPage + 1)">{{ currentPage + 1 }}</a>
+
+        <a  *ngIf="(totalPages > 2) && (currentPage + 3 < totalPages)" [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPage(currentPage + 2)">{{ currentPage + 2 }}</a>
+
+        <a *ngIf="(totalPages > 3) && (currentPage + 4 < totalPages)" [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPage(currentPage + 3)">{{ currentPage + 3 }}</a>
+
+        <i *ngIf="(totalPages > 2) && (currentPage + 1 < totalPages)">...</i>
+        <a *ngIf="(totalPages > 1) && (currentPage !== totalPages)" [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onPage(totalPages)">{{ totalPages }}</a>
+        <button [ngClass]="isTheme ? 'theme-btn--dark theme-text--dark' : 'theme-btn--light theme-text--light'" (click)="onNext()" [disabled]="currentPage === totalPages ? true : false">Next</button>
+    </div>
+    <p class="pagination-info">
+        <i>Jokes: {{ rangeJokes }} of {{ totalJokes }} </i>
+        <i>Current Page: {{ currentPage  }}</i>
+        <strong> Total pages: {{ totalPages }}</strong>
+    </p>
+</div>

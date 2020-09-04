@@ -13,23 +13,11 @@ export class ApiService {
 
   getAllJokes() {
     const url = `${URL_API}random/1000`;
-    const result = this.http.get(url).pipe(
-      tap((res) => {}),
-      catchError((e) => {
-        throw e;
-      })
-    );
-    return result;
+    return this.http.get(url);
   }
 
   getOneJoke(id: string) {
     const url = `${URL_API}${id}`;
-    const result = this.http.get(url).pipe(
-      tap((res) => {}),
-      catchError((e) => {
-        throw e;
-      })
-    );
-    return result;
+    return this.http.get(url);
   }
 }

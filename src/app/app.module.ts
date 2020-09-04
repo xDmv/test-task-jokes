@@ -7,11 +7,13 @@ import { ListJokesComponent } from './pages/list-jokes/list-jokes.component';
 import { DetailJokeComponent } from './pages/detail-joke/detail-joke.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './pages/list-jokes/components/list/list.component';
 import { ApiService } from './services/api.service';
 import { PaginationComponent } from './pages/list-jokes/components/pagination/pagination.component';
+import { PaginationService } from './services/pagination.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,18 +22,17 @@ import { PaginationComponent } from './pages/list-jokes/components/pagination/pa
     DetailJokeComponent,
     NotFoundComponent,
     ListComponent,
-    PaginationComponent
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule.forRoot(),
   ],
-  providers: [
-    ApiService
-  ],
-  bootstrap: [AppComponent]
+  providers: [ApiService, PaginationService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

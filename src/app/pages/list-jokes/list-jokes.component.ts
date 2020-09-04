@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { Joke, JokeList } from 'src/app/interfaces/note-joke';
 import { ApiService } from 'src/app/services/api.service';
-import { StateService } from 'src/app/services/state.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 import { NoteJoke } from '../../interfaces/note-joke';
 
 @Component({
@@ -30,7 +30,7 @@ export class ListJokesComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
-    private store: StateService,
+    private pagination: PaginationService,
     public router: Router
   ) {
     this.ngUnsubscribe = new Subject();
@@ -47,70 +47,62 @@ export class ListJokesComponent implements OnInit, OnDestroy {
   }
 
   toggleTheme(value: boolean) {
-    // @ts-ignore
-    this.store.theme = value;
+    this.pagination.setTheme(value);
   }
 
   config() {
-    this.store.onInit();
+    this.pagination.onInit();
 
-    this.store.theme
+    this.pagination.theme
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: boolean) => {
         this.isDark = value;
       });
 
-    this.store.totalPages
+    this.pagination.totalPages
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: number) => {
         this.totalPages = value;
       });
 
-    this.store.currentPage
+    this.pagination.currentPage
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: number) => {
         this.currentPage = value;
       });
 
-      this.store.totalJokes
+      this.pagination.totalJokes
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: number) => {
         this.totalJokes = value;
       });
 
-      this.store.rangeJokes
+      this.pagination.rangeJokes
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: string) => {
         this.rangeJokes = value;
       });
 
-      this.store.currentPage
+      this.pagination.currentPage
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: number) => {
         this.currentPage = value;
       });
 
-      this.store.shownJokes
+      this.pagination.shownJokes
       .pipe(
-        // @ts-ignore
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe((value: Joke[]) => {
@@ -140,15 +132,18 @@ export class ListJokesComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           this.fullJoke = data as Joke[];
+          if(this.fullJoke.length < 1){
+            return this.notFound = true;
+          }
           this.currentArray = this.fullJoke;
-          // @ts-ignore
-          this.store.allJokes = this.fullJoke;
-          // @ts-ignore
-          this.store.AfterSearchArray = this.fullJoke;
-          this.onPagination();
+          this.pagination.setAllJokes(this.fullJoke);
+          this.pagination.setAfterSearchArray(this.fullJoke);
+          this.pagination.onPagination(this.fullJoke);
+          this.notFound = false;
         },
         (error) => {
           console.error('error ', error);
+          this.notFound = true;
         }
       );
   }
@@ -157,7 +152,6 @@ export class ListJokesComponent implements OnInit, OnDestroy {
     if (this.searchForm.valid) {
       return this.warning = true;
     }
-
     this.searchForm.valueChanges.pipe(debounceTime(1500)).subscribe(() => {
         this.warning = false;
         this.currentArray = [];
@@ -170,37 +164,9 @@ export class ListJokesComponent implements OnInit, OnDestroy {
         if(this.currentArray.length < 1){
           this.notFound = true;
         }
-        // @ts-ignore
-        this.store.AfterSearchArray = this.currentArray;
-        this.onPagination();
+        this.pagination.setAfterSearchArray(this.currentArray);
+        this.pagination.onPagination(this.currentArray);
         this.notFound = false;
       });
-  }
-
-  onPagination() {
-    this.store.AfterSearchArray
-    .pipe(
-      // @ts-ignore
-      takeUntil(this.ngUnsubscribe)
-    )
-    .subscribe((value: Joke[]) => {
-      this.currentArray = value;
-      let endJoke = 0;
-      if(this.currentArray.length  > 10){
-        endJoke = 10;
-      } else {
-        endJoke = this.currentArray.length;
-      }
-      // @ts-ignore
-      this.store.totalJokes = this.currentArray.length;
-      // @ts-ignore
-      this.store.totalPages = this.currentArray.length > 10 ? Math.ceil(this.currentArray.length / 10) : 1;
-      // @ts-ignore
-      this.store.rangeJokes = `1-${endJoke}`;
-      // @ts-ignore
-      this.store.currentPage = 1;
-      // @ts-ignore
-      this.store.shownJokes = this.currentArray.slice(0, 10);
-    });
   }
 }

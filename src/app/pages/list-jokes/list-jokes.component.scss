@@ -11,8 +11,11 @@
         }
     }
     .active {
-        border-bottom: 2px solid #000;
         background: #32CD32;
+        cursor: not-allowed;
+    }
+    .active:hover {
+        background: #006400;
     }
 }
 
@@ -21,27 +24,7 @@
     padding: 1em;
     margin: 1em;
 
-    .pagination {
-        .pagination-btns { 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
-            .btn-number-current-page {
-                border: 2px solid #fff;
-            }
-        }
-        .pagination-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            i {
-                padding-left: 1em;
-            }
-            strong {
-                padding-left: 1em;
-            }
-        }
-
+    .no-found{
+        text-align: center;
     }
 }

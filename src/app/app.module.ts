@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './pages/list-jokes/components/list/list.component';
 import { ApiService } from './services/api.service';
 import { PaginationComponent } from './pages/list-jokes/components/pagination/pagination.component';
-import { PaginationService } from './services/pagination.service';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -32,7 +31,7 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     SharedModule.forRoot(),
   ],
-  providers: [ApiService, PaginationService],
+  providers: [ApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

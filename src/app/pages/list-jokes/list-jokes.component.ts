@@ -125,17 +125,7 @@ export class ListJokesComponent implements OnInit, OnDestroy {
   }
 
   getData() {
-    const apiData$ = this.api.getAllJokes().pipe(
-      map((jokes: NoteJoke) => {
-        return jokes.value.map((item: JokeList) => {
-          return {
-            id: item.id,
-            text: item.joke,
-          };
-        });
-      })
-    );
-    this.api
+    const apiData$ = this.api
       .getAllJokes()
       .pipe(
         map((jokes: NoteJoke) => {
@@ -165,26 +155,26 @@ export class ListJokesComponent implements OnInit, OnDestroy {
 
   startLiveSearch() {
     if (this.searchForm.valid) {
-      this.searchForm.valueChanges.pipe(debounceTime(1500)).subscribe(() => {
+      return this.warning = true;
+    }
+
+    this.searchForm.valueChanges.pipe(debounceTime(1500)).subscribe(() => {
         this.warning = false;
         this.currentArray = [];
-        const reg = new RegExp(this.searchForm.value.searchString, 'i');
+        const reg = new RegExp(this.searchForm.value.searchString, 'ig');
         this.fullJoke.map((item) => {
           if (item.text.match(reg)) {
             this.currentArray.push(item);
           }
         });
-        if(this.currentArray.length > 0){
-          // @ts-ignore
-          this.store.AfterSearchArray = this.currentArray;
-          this.onPagination();
-          return this.notFound = false;
+        if(this.currentArray.length < 1){
+          this.notFound = true;
         }
-        this.notFound = true;
+        // @ts-ignore
+        this.store.AfterSearchArray = this.currentArray;
+        this.onPagination();
+        this.notFound = false;
       });
-    } else {
-      this.warning = true;
-    }
   }
 
   onPagination() {

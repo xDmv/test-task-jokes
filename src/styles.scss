@@ -23,7 +23,7 @@ $text-colors:(
 );
 
 $card-joke:(
-    light: #268bd2,
+    light: wheat,
     dark: #1a3f48
 );
 
@@ -64,7 +64,7 @@ $input-search:(
     @each $name, $color in $text-colors {
         &--#{$name}{
             color: $color;
-            font-size: 1rem;
+            font-size: 16px;
         }
     }
 }
@@ -73,7 +73,6 @@ $input-search:(
     @each $name, $color in $card-joke {
         &--#{$name}{
             background: $color;
-            color: #fff;
         }
     }
 }

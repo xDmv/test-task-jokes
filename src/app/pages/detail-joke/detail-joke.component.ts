@@ -35,7 +35,6 @@ export class DetailJokeComponent implements OnInit {
   }
 
   getData(id: string) {
-    console.log('id', id);
     this.api.getOneJoke(id).subscribe(
       (data) => {
         const note = data as NoteJoke;

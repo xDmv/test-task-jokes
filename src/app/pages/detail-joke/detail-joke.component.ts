@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { NoteJoke } from '../../interfaces/note-joke';
-import { StateService } from '../../services/state.service';
+import { PaginationService } from '../../services/pagination.service';
 
 @Component({
   selector: 'app-detail-joke',
@@ -21,7 +21,7 @@ export class DetailJokeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public router: Router,
     public api: ApiService,
-    private store: StateService
+    private pagination: PaginationService
   ) {
     this.ngUnsubscribe = new Subject();
   }
@@ -29,7 +29,7 @@ export class DetailJokeComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.getData(this.id);
-    this.store.theme.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
+    this.pagination.theme.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.isDark = value;
     });
   }
@@ -50,7 +50,6 @@ export class DetailJokeComponent implements OnInit {
   }
 
   isSetDarkTheme(value: boolean) {
-    // @ts-ignore
-    this.store.theme = value;
+    this.pagination.setTheme(value);
   }
 }

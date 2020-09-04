@@ -1,17 +1,17 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StateService } from '../services/state.service';
+import { PaginationService } from '../services/pagination.service';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule],
-  providers: [StateService],
+  providers: [PaginationService],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
-      providers: [{ provide: StateService }],
+      providers: [{ provide: PaginationService }],
     };
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { StateService } from 'src/app/services/state.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 import { Joke } from '../../../../interfaces/note-joke';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,15 +22,14 @@ export class PaginationComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<void>;
 
   constructor(
-    private store: StateService
+    private pagination: PaginationService
   ) { 
     this.ngUnsubscribe = new Subject();
   }
 
   ngOnInit(): void {
-    this.store.AfterSearchArray
+    this.pagination.AfterSearchArray
     .pipe(
-      // @ts-ignore
       takeUntil(this.ngUnsubscribe)
     )
     .subscribe((value: Joke[]) => {
@@ -42,42 +41,38 @@ export class PaginationComponent implements OnInit, OnDestroy {
     let startJoke = (this.currentPage - 2) * 10;
     let endJoke = (this.currentPage - 1) * 10;
     if((this.currentPage) === 2){
-      // @ts-ignore
-      this.store.rangeJokes = `1-10`;
+      this.pagination.setRangeJokes(`1-10`);
     } else {
-      // @ts-ignore
-      this.store.rangeJokes = `${startJoke}-${endJoke}`;
+      this.pagination.setRangeJokes(`${startJoke}-${endJoke}`);
     }
-    // @ts-ignore
-    this.store.currentPage = this.currentPage - 1;
-    // @ts-ignore
-    this.store.shownJokes = this.currentArray.slice(startJoke, endJoke)
+    this.pagination.setCurrentPage(this.currentPage - 1);
+    this.pagination.setShownJokes(this.currentArray.slice(startJoke, endJoke));
   }
 
   onNext(){
     let startJoke = this.currentPage * 10;
     let endJoke = (this.currentPage + 1) * 10;
-    if((this.currentPage) === (Math.ceil(this.currentArray.length / 10))){
+    if((this.currentPage+1) === (Math.ceil(this.currentArray.length / 10))){
       let end = this.currentArray.length
-      // @ts-ignore
-      this.store.rangeJokes = `${startJoke}-${end}`;
+      this.pagination.setRangeJokes(`${startJoke}-${end}`);
     } else {
-      // @ts-ignore
-      this.store.rangeJokes = `${startJoke}-${endJoke}`;
+      this.pagination.setRangeJokes(`${startJoke}-${endJoke}`);
     }
-    // @ts-ignore
-    this.store.currentPage = this.currentPage + 1;
-    // @ts-ignore
-    this.store.shownJokes = this.currentArray.slice(startJoke, endJoke)
+    this.pagination.setCurrentPage(this.currentPage + 1);
+    this.pagination.setShownJokes(this.currentArray.slice(startJoke, endJoke));
   }
 
   onPage(index: number){
     let startJoke = (index - 1) * 10;
     let endJoke = index * 10;
-    // @ts-ignore
-    this.store.currentPage = index;
-    // @ts-ignore
-    this.store.shownJokes = this.currentArray.slice(startJoke, endJoke);
+    if(index === (Math.ceil(this.currentArray.length / 10))){
+      let end = this.currentArray.length
+      this.pagination.setRangeJokes(`${startJoke}-${end}`);
+    } else {
+      this.pagination.setRangeJokes(`${startJoke}-${endJoke}`);
+    }
+    this.pagination.setCurrentPage(index);
+    this.pagination.setShownJokes(this.currentArray.slice(startJoke, endJoke));
   }
 
   ngOnDestroy(): void {
